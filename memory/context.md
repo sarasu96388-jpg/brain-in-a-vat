@@ -50,6 +50,17 @@ brain-in-a-vat/
     └── workflows/         # GitHub Actions 自动化
 ```
 
+## 关联项目：X56
+
+- **项目代号**：X56
+- **游戏类型**：植物题材休闲博彩手游
+- **直接竞品**：Monopoly Go (MGO)
+- **目标用户**：18-60 岁欧美用户，女性为主
+- **核心玩法**：棋盘掷骰 + RTP 调控 + BUFF 系统 + HOME DIY + 社交互动
+- **本地资料路径**：`D:\X56\`
+- **差异化方向**：8 字形棋盘、植物题材、房屋 DIY、QTE 小游戏 BUFF、社区社交概念
+- **详细认知**：见 `deliverables/X56项目认知报告.md`
+
 ## 当前状态
 
 详见 `memory/status.md`
