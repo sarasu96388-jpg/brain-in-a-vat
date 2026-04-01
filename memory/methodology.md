@@ -35,12 +35,27 @@
 - 决策 → `memory/decisions.md`
 - 新的工作方法 → `memory/methodology.md`
 
-### 4. 零代码友好
+### 5. 记忆更新需用户确认
 
-所有技术操作都需要：
-- AI 提供清晰的步骤说明
-- 用户只需要审查和确认，不需要理解代码细节
-- 复杂操作由 AI 直接执行
+每次更新以下文件前，必须先向用户展示变更内容并获得明确确认：
+- `memory/decisions.md` — 决策日志
+- `memory/context.md` — 项目上下文
+- `memory/status.md` — 项目状态
+- `memory/methodology.md` — 工作方法论
+- `deliverables/` 下的认知报告和分析文档
+
+**确认格式：**
+
+```
+确认更新项目记忆
+即将修改：
+- memory/decisions.md — 新增 X 条决策
+- memory/status.md — 更新进度
+- deliverables/XXX — 更新内容摘要
+是否确认？
+```
+
+用户确认后才执行写入和 git 推送。
 
 ## 常见问题处理
 
