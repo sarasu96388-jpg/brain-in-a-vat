@@ -398,11 +398,13 @@ waterLevelRatio = pool.remainingValue / pool.initialValue
 // Step 2: 计算基础提升倍率
 baseBoostMultiplier = 1 + pool.K × waterLevelRatio
 
-// Step 3: 应用上限保护
+// Step 3: 应用概率上限保护（注意：此处的min/max是概率上限，不是奖池消亡的Min/Max）
 adjustedProbability = P_base × baseBoostMultiplier
 adjustedProbability = min(adjustedProbability, P_base × 3.0)
 adjustedProbability = min(adjustedProbability, 0.5)
 ```
+
+> **注意**：此处的概率上限保护与4.5节的Min/Max无关。概率上限保护防止触发概率过高，Min/Max控制的是奖池价值扣除速度。
 
 #### 4.4.3 概率提升配置示例
 
@@ -415,7 +417,13 @@ adjustedProbability = min(adjustedProbability, 0.5)
 
 ### 4.5 价值扣除规则（奖池消亡机制）
 
-#### 4.5.1 核心逻辑
+#### 4.5.1 核心概念
+
+Min和Max是**奖池价值扣除的阈值**，与概率提升无关。它们控制的是：玩家触发事件后，奖池应该扣多少分。
+
+> **Min/Max判断的是EventValue（事件实际产出价值），不是Bet，也不是P_boost。**
+
+#### 4.5.2 核心逻辑
 
 每次玩家触发奖池关联事件并获得奖励时，从奖池中扣除对应分值。**判断依据是事件实际产出价值（EventValue），不是玩家Bet。**
 
@@ -446,7 +454,7 @@ else:
 pool.remainingValue -= actualDeduction
 ```
 
-#### 4.5.2 参数建议值
+#### 4.5.3 参数建议值
 
 | 参数 | 建议值 | 说明 |
 |------|--------|------|
@@ -455,14 +463,14 @@ pool.remainingValue -= actualDeduction
 | alpha | 0.3~0.5 | 越小加速越温和 |
 | beta | 0.3~0.5 | 越小延续性越强 |
 
-#### 4.5.3 特殊配置
+#### 4.5.4 特殊配置
 
 某些奖池可以不设置Max上限（配置Max=0或-1），允许一次性掏空。适用于：
 - 充值大额返利奖池
 - 破产恢复救济池
 - 活动最终结算池
 
-#### 4.5.4 坏账预留机制
+#### 4.5.5 坏账预留机制
 
 ```
 生成奖池预算时，预设 5% 的溢出空间：
