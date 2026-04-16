@@ -400,11 +400,19 @@ baseBoostMultiplier = 1 + pool.K × waterLevelRatio
 
 // Step 3: 应用概率上限保护（注意：此处的min/max是概率上限，不是奖池消亡的Min/Max）
 adjustedProbability = P_base × baseBoostMultiplier
-adjustedProbability = min(adjustedProbability, P_base × 3.0)
-adjustedProbability = min(adjustedProbability, 0.5)
+adjustedProbability = min(adjustedProbability, P_base × 3.0)  // 相对上限：最多提升到基础概率的3倍
+adjustedProbability = min(adjustedProbability, 0.5)           // 绝对上限：任何事件概率不超过50%
 ```
 
 > **注意**：此处的概率上限保护与4.5节的Min/Max无关。概率上限保护防止触发概率过高，Min/Max控制的是奖池价值扣除速度。
+
+**为什么需要上限保护？**
+
+1. **防止极端参数导致概率爆炸**：当奖池很满且玩家bet很低时，`K × V_pool / (E_val × Bet)` 可能变得极大（如上万），导致P_boost失控。上限保护确保概率在合理范围内。
+
+2. **保留"不命中"的可能性**：即使奖池加持，也要让玩家有一定概率踩不到这个格子。0.5的上限意味着最多50%概率，保留了一半的"落空"空间，避免玩家产生"系统强制让我踩这个"的廉价感。
+
+3. **维持游戏体验的自然随机性**：博彩游戏的核心是"不确定性"。如果某事件概率提升到80%甚至100%，玩家会明显感知到系统干预，失去"运气"的归因，转而怀疑"被操控"。
 
 #### 4.4.3 概率提升配置示例
 
